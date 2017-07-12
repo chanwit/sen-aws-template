@@ -488,9 +488,13 @@ class Ec2Inventory(object):
 
         # Instance filters (see boto and EC2 API docs). Ignore invalid filters.
         self.ec2_instance_filters = defaultdict(list)
-        if config.has_option('ec2', 'instance_filters'):
+        aws_instance_filters = os.environ.get('AWS_INSTANCE_FILTERS')
+        if aws_instance_filters is None:
+            if config.has_option('ec2', 'instance_filters'):
+                aws_instance_filters = config.get('ec2', 'instance_filters')
 
-            filters = [f for f in config.get('ec2', 'instance_filters').split(',') if f]
+        if aws_instance_filters is not None:
+            filters = [f for f in aws_instance_filters.split(',') if f]
 
             for instance_filter in filters:
                 instance_filter = instance_filter.strip()

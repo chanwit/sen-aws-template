@@ -1,10 +1,11 @@
-########################################
-# Initialize a new VPC
+#############################################################
+# Initialize a new VPC.
 #
-# name:       Name of the project
-# cidr_block: VPC subnet
-# region:     Region to define the VPC
-########################################
+#   -o name=<name>              # Name of the project.
+#   -o cidr_block=<cidr_block>  # VPC subnet, e.g. 172.30.0.0/16.
+#   -o region=<region>          # Region to define the VPC,
+#                                 e.g. ap-southeast-1.
+#############################################################
 - name: setup vpc
   hosts: localhost
   connection: local

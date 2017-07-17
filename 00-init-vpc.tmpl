@@ -1,11 +1,11 @@
-#############################################################
+###################################################################
 # Initialize a new VPC.
 #
 #   -o name=<name>              # Name of the project.
 #   -o cidr_block=<cidr_block>  # VPC subnet, e.g. 172.30.0.0/16.
 #   -o region=<region>          # Region to define the VPC,
 #                                 e.g. ap-southeast-1.
-#############################################################
+###################################################################
 - name: setup vpc
   hosts: localhost
   connection: local
@@ -13,20 +13,23 @@
   - name: setup vpc
     ec2_vpc:
       state: present
-      cidr_block: {{cidr_block}}
-      resource_tags: { "Name":"vpc-{{name}}", "Project": "{{name}}"}
+      cidr_block: [[cidr_block]]
+      resource_tags: { "Name":"vpc-[[name]]", "Project": "[[name]]"}
       subnets:
-        - cidr: {{subnet_1}}
-          az: {{zone_1}}
-        - cidr: {{subnet_2}}
-          az: {{zone_2}}
+        - cidr: [[subnet_1]]
+          az: [[zone_1]]
+        - cidr: [[subnet_2]]
+          az: [[zone_2]]
+        - cidr: [[subnet_3]]
+          az: [[zone_3]]
       internet_gateway: True
       route_tables:
         - subnets:
-            - {{subnet_1}}
-            - {{subnet_2}}
+            - [[subnet_1]]
+            - [[subnet_2]]
+            - [[subnet_3]]
           routes:
             - dest: 0.0.0.0/0
               gw: igw
-      region: {{region}}
+      region: [[region]]
     register: vpc
